@@ -1,16 +1,16 @@
 {
   "Condor": {
-    "name": "",
+    "name": "elcondor",
     "url": "https://superelcondor.com.ar/categoria-producto/lacteos/leches",
     "location": "Misiones"
   },
   "Tu Almacen": {
-    "name": "",
+    "name": "tualmacen",
     "url": "https://tualmacen.com.ar/productos.php?subcategoria=167&oferta=0",
     "location": "Mar del Plata"
   },
   "Alvear": {
-    "name": "",
+    "name": "alvear",
     "url":"https://www.alvearsupermercados.com.ar/product-category/lacteos-7-0-0/leches-7-88-0/",
     "location":"Santa Fe"
   }
