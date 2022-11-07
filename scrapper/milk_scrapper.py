@@ -4,23 +4,33 @@ import io
 import re
 
 
-def clasificador(titulo):
+def clasificador(titulo:str) -> list:
     categoria_final = []
-    leche = titulo[0]
-    categorias = {"Polvo":r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)","Descremada":r"descremada","Entera":r"entera","Infantil":r"(bebe|infantil|bebé)","Larga Vida":r"larga vida","Sachet":r"sachet","Saborizadas":r"(chocolatada|chocolate)"}
+    titulo = titulo[0]
+    categorias = {"Polvo":r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)",
+                  "Descremada":r"descremada",
+                  "Entera":r"entera","Infantil":r"(bebe|infantil|bebé)",
+                  "Larga Vida":r"larga vida",
+                  "Sachet":r"sachet",
+                  "Saborizadas":r"(chocolatada|chocolate)"
+                }
 
     for categoria,regex in categorias.items():
-        if(re.match(regex,titulo,re.IGNORECASE)):
+        match = re.search(regex,titulo,re.IGNORECASE)
+        if(match):
             categoria_final.append(categoria)
+
     if(len(categoria_final) == 0):
         categoria_final.append("Otro")
+
     return categoria_final
 
-def scrap_milks_html(data,list_xpath,title_xpath,price_xpath,writer,pager=None):
+def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,writer,pager:dict=None) -> None:
     res = requests.get(data["url"])
     html_doc = io.StringIO(res.text)
     parser = etree.HTMLParser()
     tree = etree.parse(html_doc, parser)
+
     for p in tree.xpath(list_xpath):
         title = p.xpath(title_xpath)
         price = p.xpath(price_xpath)
@@ -32,5 +42,4 @@ def scrap_milks_html(data,list_xpath,title_xpath,price_xpath,writer,pager=None):
             page_url = page.xpath(pager["url_xpath"])
             scrap_milks_html({"url":page_url[0],"name":data["name"]},list_xpath,title_xpath,price_xpath,writer)
 
-    # tirar los valores a la base
 

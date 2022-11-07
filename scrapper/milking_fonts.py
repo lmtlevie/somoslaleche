@@ -1,8 +1,8 @@
-from milk_scrapper import scrap_milks_html
+from milk_scrapper import scrap_milks_html,clasificador
 import json
 import csv
 
-with open('scrapper/fonts.json') as f:
+with open('scrapper/sources.json') as f:
    data = json.load(f)
 
    with open("scrapper/results.csv","w") as res:
