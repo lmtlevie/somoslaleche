@@ -1,31 +1,20 @@
 import requests
 from lxml import etree
 import io
-import re;
+import re
 
 
-def clasificador(leche):
-    categoria = [];
-    leche = leche[0];
-    if(re.match(r"polvo",leche,re.IGNORECASE)):
-        categoria.append("Polvo")
-    if(re.match(r"(vegetal|almendras|planta|a base de)",leche,re.IGNORECASE)):
-        categoria.append("Vegetal")
-    if(re.match(r"descremada",leche,re.IGNORECASE)):
-        categoria.append("Descremada")
-    if(re.match(r"entera",leche,re.IGNORECASE)):
-        categoria.append("Entera")
-    if(re.match(r"(bebe|infantil|bebé)",leche,re.IGNORECASE)):
-        categoria.append("Infantil")
-    if(re.match(r"larga vida",leche,re.IGNORECASE)):
-        categoria.append("Larga Vida")
-    if(re.match(r"sachet",leche,re.IGNORECASE)):
-        categoria.append("Sachet")
-    if(re.match(r"(chocolatada|chocolate)",leche,re.IGNORECASE)):
-        categoria.append("Saborizadas")
-    if(len(categoria) == 0):
-        categoria.append("Otro")
-    return categoria
+def clasificador(titulo):
+    categoria_final = []
+    leche = titulo[0]
+    categorias = {"Polvo":r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)","Descremada":r"descremada","Entera":r"entera","Infantil":r"(bebe|infantil|bebé)","Larga Vida":r"larga vida","Sachet":r"sachet","Saborizadas":r"(chocolatada|chocolate)"}
+
+    for categoria,regex in categorias.items():
+        if(re.match(regex,titulo,re.IGNORECASE)):
+            categoria_final.append(categoria)
+    if(len(categoria_final) == 0):
+        categoria_final.append("Otro")
+    return categoria_final
 
 def scrap_milks_html(data,list_xpath,title_xpath,price_xpath,writer,pager=None):
     res = requests.get(data["url"])
