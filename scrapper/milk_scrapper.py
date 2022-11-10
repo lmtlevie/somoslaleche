@@ -82,6 +82,6 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
         for page in tree.xpath(pager["pager_xpath"]):
             page_url = page.xpath(pager["url_xpath"])
             data["url"] = page_url[0]
-            scrap_milks_html(data,list_xpath,title_xpath,price_xpath,writer)
+            scrap_milks_html(data,list_xpath,title_xpath,price_xpath)
 
 
