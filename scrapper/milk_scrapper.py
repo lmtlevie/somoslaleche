@@ -4,6 +4,7 @@ from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
 import io
 import re
+from price_parser import Price
 
 def create_table_bigquery(client,table_id) -> None:
     schema = [
@@ -72,9 +73,10 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
         title = p.xpath(title_xpath)
         price = p.xpath(price_xpath)
         categoria = clasificador(title)
-        add_row_bigquery({"title":      title[0],"brand":"",
+        print({"title":      title[0],
                           "seller":     data["name"],
-                          "price":      int(float(price[0].replace("$","").replace(",",""))),
+                          #"price":      int(float(price[0].replace("$","").replace(",",""))),
+                          "price": int(Price.fromstring(price[0]).amount),
                           "category":   categoria[0],
                           "location":   data["location"]})
 
@@ -82,6 +84,8 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
         for page in tree.xpath(pager["pager_xpath"]):
             page_url = page.xpath(pager["url_xpath"])
             data["url"] = page_url[0]
+            if "host" in pager.keys():
+                data["url"] = pager["host"] + data["url"]
             scrap_milks_html(data,list_xpath,title_xpath,price_xpath)
 
 
