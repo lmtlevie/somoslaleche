@@ -44,11 +44,11 @@ def clasificador(titulo:str) -> list:
     """"""
     categoria_final = []
     titulo = titulo[0]
-    categorias = {"Polvo":      r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)",
-                  "Descremada": r"descremada",
-                  "Entera":     r"entera","Infantil":r"(bebe|infantil|bebé)",
-                  "Larga Vida": r"larga vida",
-                  "Sachet":     r"sachet",
+    categorias = {"Polvo":r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)",
+                  "Descremada":r"descremada",
+                  "Entera":r"entera","Infantil":r"(bebe|infantil|bebé)",
+                  "Larga Vida":r"larga vida",
+                  "Sachet":r"sachet",
                   "Saborizadas":r"(chocolatada|chocolate)"
                 }
 
@@ -73,12 +73,11 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
         title = p.xpath(title_xpath)
         price = p.xpath(price_xpath)
         categoria = clasificador(title)
-        print({"title":      title[0],
-                          "seller":     data["name"],
-                          #"price":      int(float(price[0].replace("$","").replace(",",""))),
-                          "price": int(Price.fromstring(price[0]).amount),
-                          "category":   categoria[0],
-                          "location":   data["location"]})
+        add_row_bigquery([{"title":title[0],
+                          "seller":data["name"],
+                          "price":int(Price.fromstring(price[0]).amount),
+                          "category":categoria[0],
+                          "location":data["location"]}])
 
     if pager is not None:
         for page in tree.xpath(pager["pager_xpath"]):

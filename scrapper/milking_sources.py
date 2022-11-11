@@ -2,7 +2,7 @@ from milk_scrapper import scrap_milks_html,clasificador
 import json
 import csv
 
-with open('scrapper/sources.json') as f:
+with open('./sources.json') as f:
    data = json.load(f)
 
 
