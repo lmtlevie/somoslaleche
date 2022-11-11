@@ -73,11 +73,13 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
         title = p.xpath(title_xpath)
         price = p.xpath(price_xpath)
         categoria = clasificador(title)
-        add_row_bigquery([{"title":title[0],
-                          "seller":data["name"],
-                          "price":int(Price.fromstring(price[0]).amount),
-                          "category":categoria[0],
-                          "location":data["location"]}])
+        product ={"title":title[0],
+                 "seller":data["name"],
+                 "price":int(Price.fromstring(price[0]).amount),
+                 "category":categoria[0],
+                 "location":data["location"]})
+        print(product)
+        add_row_bigquery([product])
 
     if pager is not None:
         for page in tree.xpath(pager["pager_xpath"]):
