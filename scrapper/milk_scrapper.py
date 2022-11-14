@@ -23,6 +23,7 @@ def create_table_bigquery(client,table_id) -> None:
     )
 
 def add_row_bigquery(row:dict) -> None:
+    print(row)
     PROJECT = "alumnos-sandbox"
     DATASET = "precios_productos"
     TABLE = "grupo_3"
@@ -79,8 +80,7 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
                  "price":float(Price.fromstring(price[0]).amount),
                  "category":categoria,
                  "location":data["location"]}
-        print(product)
-        #add_row_bigquery([product])
+        add_row_bigquery([product])
 
     if pager is not None:
         for page in tree.xpath(pager["pager_xpath"]):
@@ -108,5 +108,5 @@ def scrap_milks_JS(data):
                  "price":price,
                  "category":categoria,
                  "location":data["location"]}
-        print(product)
+        add_row_bigquery(product)
 
