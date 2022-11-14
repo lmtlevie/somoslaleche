@@ -1,10 +1,11 @@
-import requests
+from requests import get
 from lxml import etree
 from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
 import io
 import re
 from price_parser import Price
+from json import loads
 
 def create_table_bigquery(client,table_id) -> None:
     schema = [
@@ -43,16 +44,16 @@ def add_row_bigquery(row:dict) -> None:
 def clasificador(titulo:str) -> list:
     """"""
     categoria_final = []
-    titulo = titulo[0]
     categorias = {"Polvo":r"polvo","Vegetal":r"(vegetal|almendras|planta|a base de)",
                   "Descremada":r"descremada",
                   "Entera":r"entera","Infantil":r"(bebe|infantil|bebé|Bebé)",
                   "Larga Vida":r"larga vida",
                   "Sachet":r"sachet",
-                  "Saborizadas":r"(chocolatada|chocolate)"
+                  "Saborizadas":r"(chocolatada|chocolate|CHOCOLATADA)"
                 }
 
     for categoria,regex in categorias.items():
+
         match = re.search(regex,titulo,re.IGNORECASE)
         if(match):
             categoria_final.append(categoria)
@@ -64,7 +65,7 @@ def clasificador(titulo:str) -> list:
 
 def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pager:dict=None) -> None:
     """"""
-    res = requests.get(data["url"])
+    res = get(data["url"])
     html_doc = io.StringIO(res.text)
     parser = etree.HTMLParser()
     tree = etree.parse(html_doc, parser)
@@ -72,7 +73,7 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
     for p in tree.xpath(list_xpath):
         title = p.xpath(title_xpath)
         price = p.xpath(price_xpath)
-        categoria = clasificador(title)
+        categoria = clasificador(title[0])
         product ={"title":title[0],
                  "seller":data["name"],
                  "price":float(Price.fromstring(price[0]).amount),
@@ -89,4 +90,23 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
                 data["url"] = pager["host"] + data["url"]
             scrap_milks_html(data,list_xpath,title_xpath,price_xpath)
 
+
+def scrap_milks_JS(data):
+    res = get(data["url"])
+    json_res = loads(res.text)
+
+    for item in json_res:
+        title = item["productName"]
+        try:
+            categoria = item["Variedad"]
+
+        except:
+            categoria = clasificador(title)
+        price = item["items"][0]["sellers"][0]["commertialOffer"]["Price"]
+        product ={"title":title,
+                 "seller":data["name"],
+                 "price":price,
+                 "category":categoria,
+                 "location":data["location"]}
+        print(product)
 

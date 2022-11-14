@@ -18,5 +18,43 @@
      "name": "La Proveduria",
      "url": "https://www.laproveeduria.ar/lacteos-milanesas-embutidos-tapas-de-tartas-y-empanadas/leches",
      "location": "Buenos Aires"
+  },
+  "libertad": {
+    "libertad_salta": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=14",
+        "location":"Salta"
+    },
+    "libertad_tucuman": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=8",
+        "location":"Tucuman"
+    },
+    "libertad_mendoza": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=6",
+        "location":"Mendoza"
+    },
+    "libertad_chaco": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=10",
+        "location":"Chaco"
+    },
+    "libertad_santafe": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=11",
+        "location":"Santa Fe"
+    },
+    "libertad_stgestero": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=12",
+        "location":"Santiago Del Estero"
+    },
+    "libertad_sanjuan": {
+        "name": "Libertad",
+        "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=13",
+        "location":"San Juan"
+    }
   }
 }
+

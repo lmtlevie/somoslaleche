@@ -1,4 +1,4 @@
-from milk_scrapper import scrap_milks_html,clasificador
+from milk_scrapper import scrap_milks_html,scrap_milks_JS
 import json
 import csv
 
@@ -13,3 +13,6 @@ with open('./sources.json') as f:
    scrap_milks_html(data["alvear"],"//div[@class='product-small box ']",".//div[@class='title-wrapper']//a/text()",".//span[@class='price']/del/span/text()")
 
    scrap_milks_html(data["la_proveduria"],"//div[@class='item']",".//h3/text()",".//div[@class='price']/text()",{"pager_xpath":"//div[@class='btn-group']","url_xpath":".//a/@href","host":"https://www.laproveeduria.ar"})
+
+   for item,page_data in data["libertad"].items():
+      scrap_milks_JS(page_data)
