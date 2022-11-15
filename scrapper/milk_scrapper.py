@@ -6,14 +6,16 @@ import io
 import re
 from price_parser import Price
 from json import loads
+from datetime import date
 
 def create_table_bigquery(client,table_id) -> None:
     schema = [
             bigquery.SchemaField("title", "STRING", mode="REQUIRED"),
             bigquery.SchemaField("seller", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("price", "INTEGER", mode="REQUIRED"),
-            bigquery.SchemaField("category", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("price", "FLOAT", mode="REQUIRED"),
+            bigquery.SchemaField("category", "STRING", mode="REPEATED"),
             bigquery.SchemaField("location", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("created_at","DATE",mode="REQUIRED")
             ]
 
     table = bigquery.Table(table_id, schema=schema)
@@ -26,7 +28,7 @@ def add_row_bigquery(row:dict) -> None:
     print(row)
     PROJECT = "alumnos-sandbox"
     DATASET = "precios_productos"
-    TABLE = "grupo_3"
+    TABLE = "grupo_3_V2"
     client = bigquery.Client(project=PROJECT)
     table_id = f"{PROJECT}.{DATASET}.{TABLE}"
     table = None
@@ -79,7 +81,8 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
                  "seller":data["name"],
                  "price":float(Price.fromstring(price[0]).amount),
                  "category":categoria,
-                 "location":data["location"]}
+                 "location":data["location"],
+                 "created_at": date.today()}
         add_row_bigquery([product])
 
     if pager is not None:
@@ -97,16 +100,18 @@ def scrap_milks_JS(data):
 
     for item in json_res:
         title = item["productName"]
+
         try:
             categoria = item["Variedad"]
-
         except:
             categoria = clasificador(title)
+
         price = item["items"][0]["sellers"][0]["commertialOffer"]["Price"]
         product ={"title":title,
                  "seller":data["name"],
                  "price":price,
                  "category":categoria,
-                 "location":data["location"]}
+                 "location":data["location"],
+                 "created_at":date.fromisoformat(item["releaseDate"].split("T")[0])}
         add_row_bigquery(product)
 
