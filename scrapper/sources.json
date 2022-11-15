@@ -2,7 +2,7 @@
   "condor": {
     "name": "Condor",
     "url": "https://superelcondor.com.ar/categoria-producto/lacteos/leches",
-    "location": "Misiones"
+    "location": "Posadas"
   },
   "tu_almacen": {
     "name": "Tu Almacen",
@@ -23,37 +23,44 @@
     "libertad_salta": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=14",
-        "location":"Salta"
+        "location":"Salta",
+        "suc":14
     },
     "libertad_tucuman": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=8",
-        "location":"Tucuman"
+        "location":"Tucuman",
+        "suc":8
     },
     "libertad_mendoza": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=6",
-        "location":"Mendoza"
+        "location":"Mendoza",
+        "suc":6
     },
     "libertad_chaco": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=10",
-        "location":"Chaco"
+        "location":"Resistencia",
+        "suc":10
     },
     "libertad_santafe": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=11",
-        "location":"Santa Fe"
+        "location":"Santa Fe",
+        "suc":11
     },
     "libertad_stgestero": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=12",
-        "location":"Santiago Del Estero"
+        "location":"Santiago Del Estero",
+        "suc":12
     },
     "libertad_sanjuan": {
         "name": "Libertad",
         "url": "https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from=0&_to=23&ft&sc=13",
-        "location":"San Juan"
+        "location":"San Juan",
+        "suc":13
     }
   }
 }

@@ -94,11 +94,15 @@ def scrap_milks_html(data:dict,list_xpath:str,title_xpath:str,price_xpath:str,pa
             scrap_milks_html(data,list_xpath,title_xpath,price_xpath)
 
 
-def scrap_milks_JS(data):
+def scrap_milks_JS(data,page):
     res = get(data["url"])
     json_res = loads(res.text)
 
+    if(res.status_code == 400):
+        return
+
     for item in json_res:
+
         title = item["productName"]
 
         try:
@@ -114,4 +118,10 @@ def scrap_milks_JS(data):
                  "location":data["location"],
                  "created_at":date.fromisoformat(item["releaseDate"].split("T")[0])}
         add_row_bigquery(product)
+        print(product)
+
+    prox_url = f"https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from={page*23}&_to={(page+1)*23}&ft&sc={data['suc']}"
+    data["url"] = prox_url
+    scrap_milks_JS(data,page+1)
+
 
