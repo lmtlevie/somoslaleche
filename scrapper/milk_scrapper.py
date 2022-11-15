@@ -32,6 +32,7 @@ def add_row_bigquery(row:dict) -> None:
     client = bigquery.Client(project=PROJECT)
     table_id = f"{PROJECT}.{DATASET}.{TABLE}"
     table = None
+    row[0]["created_at"]= row[0]["created_at"].strftime("%Y-%m-%d")
     try:
         table = client.get_table(table_id)
     except NotFound:
@@ -42,6 +43,8 @@ def add_row_bigquery(row:dict) -> None:
     errors = client.insert_rows_json(table, row)
     if errors == []:
         print("Success")
+    else:
+        print(errors)
 
 
 def clasificador(titulo:str) -> list:
@@ -117,7 +120,8 @@ def scrap_milks_JS(data,page):
                  "category":categoria,
                  "location":data["location"],
                  "created_at":date.fromisoformat(item["releaseDate"].split("T")[0])}
-        add_row_bigquery(product)
+
+        add_row_bigquery([product])
         print(product)
 
     prox_url = f"https://www.hiperlibertad.com.ar/api/catalog_system/pub/products/search/lacteos/leches?O=OrderByTopSaleDESC&_from={page*23}&_to={(page+1)*23}&ft&sc={data['suc']}"
